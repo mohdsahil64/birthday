@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import { config, assets } from '../data'
 
-// Auto slideshow — 3 (ya jitni) photos, har 2 second me loop pe slide.
-// Same size/style jaisa pehle cake photo ka tha.
+// Auto slideshow — full width (left-right chipki), sab photos SAME size,
+// har 2 second me loop pe slide. Reliable crossfade (opacity) use kiya hai.
 export default function Slideshow() {
   const images =
     config.slideshow && config.slideshow.length
@@ -11,7 +10,6 @@ export default function Slideshow() {
       : [assets.cakeImage]
 
   const [index, setIndex] = useState(0)
-  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     if (images.length <= 1) return
@@ -22,32 +20,25 @@ export default function Slideshow() {
   }, [images.length])
 
   return (
-    <div className="relative mx-auto w-[85vw] max-w-md">
-      {/* Fixed-size box so har photo same jagah, same size me dikhe */}
-      <div className="relative h-[70vh] max-h-[70vh] w-full overflow-hidden rounded-3xl shadow-2xl ring-2 ring-white/15 drop-shadow-[0_15px_45px_rgba(255,93,143,0.55)]">
-        {failed ? (
-          <div className="flex h-full w-full items-center justify-center bg-white/5 text-8xl">
-            🎂
-          </div>
-        ) : (
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={index}
-              src={images[index]}
-              alt={`Memory ${index + 1}`}
-              onError={() => setFailed(true)}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </AnimatePresence>
-        )}
+    <div className="relative left-1/2 w-screen -translate-x-1/2">
+      {/* Fixed-height box so har photo bilkul SAME size me dikhe */}
+      <div className="relative h-[60vh] w-full overflow-hidden bg-black/30 shadow-2xl">
+        {images.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`Memory ${i + 1}`}
+            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out"
+            style={{ opacity: i === index ? 1 : 0 }}
+          />
+        ))}
+
+        {/* Halka gradient neeche taaki dots + text saaf dikhe */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-romance-bg/60 via-transparent to-transparent" />
       </div>
 
-      {/* Chhote dots — kaunsi slide chal rahi hai */}
-      {images.length > 1 && !failed && (
+      {/* Dots — kaunsi slide chal rahi hai */}
+      {images.length > 1 && (
         <div className="mt-3 flex justify-center gap-2">
           {images.map((_, i) => (
             <span
@@ -59,11 +50,6 @@ export default function Slideshow() {
           ))}
         </div>
       )}
-
-      {/* Candle glow upar */}
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-3xl animate-glowPulse">
-        🕯️
-      </span>
     </div>
   )
 }

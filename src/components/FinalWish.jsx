@@ -107,20 +107,14 @@ export default function FinalWish() {
               {config.name} ❤️
             </motion.h2>
 
-            {/* Cake image (animated). Falls back to emoji if image missing. */}
+            {/* Photo slideshow — full width, auto slide */}
             <motion.div
-              initial={{ scale: 0.7, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 140, delay: 0.5 }}
-              className="my-6 w-full flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="my-6 w-full"
             >
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative"
-              >
-                <Slideshow />
-              </motion.div>
+              <Slideshow />
             </motion.div>
 
             {/* Manane / wish wala text — cake ke neeche */}
