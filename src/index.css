@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #140016;
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dreamy animated romantic gradient background */
+.romance-bg {
+  background: linear-gradient(135deg, #1a0020, #2b0a3d, #3d0a2e, #200a2e, #1a0020);
+  background-size: 400% 400%;
+  animation: shimmer 18s ease infinite;
+}
+
+/* ---------- Romantic background layers (fixed, on every page) ---------- */
+.romance-glows {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Soft floating colored light blobs */
+.romance-glows .glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.glow-1 {
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, #ff5d8f, transparent 70%);
+  top: -10%;
+  left: -8%;
+  animation: drift1 16s ease-in-out infinite;
+}
+.glow-2 {
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, #b14aed, transparent 70%);
+  bottom: -15%;
+  right: -10%;
+  animation: drift2 20s ease-in-out infinite;
+}
+.glow-3 {
+  width: 30vw;
+  height: 30vw;
+  background: radial-gradient(circle, #ffb347, transparent 70%);
+  top: 40%;
+  left: 55%;
+  opacity: 0.35;
+  animation: drift3 24s ease-in-out infinite;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 8vh) scale(1.15); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-7vw, -6vh) scale(1); }
+}
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5vw, 5vh) scale(1.2); }
+}
+
+/* Twinkling stars sprinkled across the background */
+.romance-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,214,107,0.9), transparent),
+    radial-gradient(1px 1px at 15% 80%, rgba(255,143,171,0.9), transparent),
+    radial-gradient(1px 1px at 55% 45%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 90% 25%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 30% 15%, rgba(255,214,107,0.7), transparent);
+  animation: twinkle 4s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Dark vignette so text stays readable */
+.romance-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10,0,15,0.7) 100%);
+}
+
+/* Gold shimmering text */
+.gold-text {
+  background: linear-gradient(90deg, #ffd66b, #fff3c4, #ffb347, #ffd66b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Blinking typing caret */
+.caret::after {
+  content: '|';
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  color: #ff8fab;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Glowing button */
+.glow-btn {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 25px rgba(255, 93, 143, 0.5);
+}
+.glow-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 45px rgba(255, 93, 143, 0.9);
+}
+.glow-btn:active {
+  transform: scale(0.97);
+}
+
+::selection {
+  background: #ff5d8f;
+  color: #fff;
+}
