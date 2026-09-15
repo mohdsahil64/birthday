@@ -30,7 +30,7 @@ export default function ReplyBox() {
       className="mt-6 w-full max-w-md text-left"
     >
       <label className="mb-2 block font-script text-2xl text-romance-rose text-center">
-        Kuch kehna hai Kuch Mujhse ?
+        Kuch kehna hai Mujhse ?
       </label>
 
       {status === 'sent' ? (
