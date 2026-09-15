@@ -63,7 +63,7 @@ export const config = {
 
   // ---- Cake reveal wish (manane wala text, cake ke neeche) ----
   cakeWish:
-    'Yeh cake sirf ek bahana hai... asli wish toh yeh hai ki tumhe allah hamesha khush raho. ' +
+    'Yeh cake sirf ek bahana hai... asli wish toh yeh hai ki tumhe allah hamesha khush rakhe. ' +
     'Pata nahi ye din dubara kab aayga, So Happy Bday Again... Saima❤️',
 
   // ---- Screen 6: Final Wish (Hinglish typing message) ----
@@ -86,8 +86,16 @@ export const config = {
 //  ASSET PATHS  (files public/ folder mein daalna, naam same rakhna)
 // =====================================================================
 export const assets = {
-  // Cake ki photo (public/ folder me hai)
+  // Cake ki photo (public/ folder me hai) — pehli slide
   cakeImage: '/cakephoto.png',
+
+  // Slideshow ki photos (auto slide, 2 sec, loop). Aur add karni ho to
+  // yahan path daal do — koi bhi count chalega.
+  slideshow: [
+    '/cakephoto.png',
+    '/A0E826D9-0F5F-4666-8D88-5B1C63945734.jpg',
+    '/IMG_5132.jpg',
+  ],
   // Background music (public/ folder me hai)
   music: '/musik.mp3',
   // Blast/celebration sound — public/blast.mp3 daal dena (optional)

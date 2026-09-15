@@ -4,6 +4,7 @@ import { config, assets } from '../data'
 import { fireFinale, fireCelebration, playBlast } from '../lib/celebrate'
 import { track } from '../lib/track'
 import ReplyBox from './ReplyBox'
+import Slideshow from './Slideshow'
 
 // Typing hook — reveals text char by char (Hinglish message)
 function useTyping(text, active, speed = 42) {
@@ -31,7 +32,6 @@ export default function FinalWish() {
   const { finalWish, cakeWish, countdown } = config
   const [count, setCount] = useState(countdown.seconds)
   const [revealed, setRevealed] = useState(false)
-  const [cakeOk, setCakeOk] = useState(true)
 
   // Countdown 5 -> 0, then blast + reveal
   useEffect(() => {
@@ -119,21 +119,7 @@ export default function FinalWish() {
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative"
               >
-                {cakeOk ? (
-                  <img
-                    src={assets.cakeImage}
-                    alt="Birthday cake"
-                    onError={() => setCakeOk(false)}
-                    className="mx-auto w-[85vw] max-w-md max-h-[70vh] rounded-3xl object-cover shadow-2xl ring-2 ring-white/15 drop-shadow-[0_15px_45px_rgba(255,93,143,0.55)]"
-                  />
-                ) : (
-                  <div className="mx-auto flex aspect-[3/4] w-[85vw] max-w-md items-center justify-center rounded-3xl border-2 border-dashed border-white/30 bg-white/5 text-8xl">
-                    🎂
-                  </div>
-                )}
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-3xl animate-glowPulse">
-                  🕯️
-                </span>
+                <Slideshow />
               </motion.div>
             </motion.div>
 
