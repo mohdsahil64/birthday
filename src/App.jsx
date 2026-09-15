@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { config, assets } from './data'
 import { track } from './lib/track'
@@ -14,16 +14,13 @@ export default function App() {
   const [screen, setScreen] = useState(0)
   const audioRef = useRef(null)
 
-  // Fires once when the site is first opened
-  useEffect(() => {
-    track('opened')
-  }, [])
-
   const next = () => setScreen((s) => s + 1)
 
   // Called by the "Open Your Surprise" button on the welcome screen.
-  // Starts the music (user gesture => allowed) and it keeps looping after.
+  // NOTE: notification sirf yahan (button click) pe jaata hai — page
+  // load / reload pe kabhi nahi.
   const startFromWelcome = () => {
+    track('opened')
     const audio = audioRef.current
     if (audio) {
       audio.volume = 0.45

@@ -51,15 +51,8 @@ function visitForThisLoad() {
 
 function send(payloadObj) {
   const payload = JSON.stringify(payloadObj)
-  try {
-    if (navigator.sendBeacon) {
-      const blob = new Blob([payload], { type: 'application/json' })
-      const ok = navigator.sendBeacon('/api/notify', blob)
-      if (ok) return
-    }
-  } catch {
-    /* fall through */
-  }
+  // Sirf fetch use karte hain (sendBeacon + fetch dono chalne se double
+  // message aa sakta tha). Ek hi request => ek hi notification.
   try {
     fetch('/api/notify', {
       method: 'POST',
@@ -68,12 +61,12 @@ function send(payloadObj) {
       keepalive: true,
     }).catch(() => {})
   } catch {
-    /* give up silently */
+    /* give up silently — never break the UX */
   }
 }
 
 export function track(stage) {
-  // Same page-load pe dobara na bheje
+  // Same page-load pe dobara na bheje (StrictMode double-render se bachao)
   if (sentThisLoad.has(stage)) return
   sentThisLoad.add(stage)
 
