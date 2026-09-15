@@ -1,9 +1,3 @@
-// Vercel Serverless Function — sends a Telegram notification.
-// Token & chat id are read from environment variables (never exposed to the browser).
-//
-// Set these in Vercel -> Project -> Settings -> Environment Variables:
-//   TELEGRAM_BOT_TOKEN  = <your bot token from @BotFather>
-//   TELEGRAM_CHAT_ID    = <your chat id from @userinfobot>
 
 export default async function handler(req, res) {
   // Allow only POST
@@ -30,11 +24,13 @@ export default async function handler(req, res) {
     }
   }
   const stage = (body && body.stage) || 'unknown'
+  const visit = Number(body && body.visit) || 1
+  const deviceId = (body && body.deviceId ? String(body.deviceId) : 'unknown').slice(0, 40)
 
-  // Human-friendly messages per stage
-  const messages = {
-    opened: '🔓 Saima ne SURPRISE khol liya! (Website opened)',
-    final_wish: '🎂❤️ Saima ne FINAL WISH dekh li! (Poori website complete)',
+  // Kya hua — chhoti clear line
+  const actions = {
+    opened: '🔓 Website OPEN ki',
+    final_wish: '🎂 FINAL WISH tak pahunch gayi',
   }
 
   const when = new Date().toLocaleString('en-IN', {
@@ -42,6 +38,12 @@ export default async function handler(req, res) {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
+
+  // Sabse upar ek saaf header: NAYA ya DUPLICATE
+  const header =
+    visit <= 1
+      ? '🆕 NAYA PHONE ne website kholi'
+      : `🔁 DUPLICATE — yehi phone pehle bhi dekh chuka (${visit} baar)`
 
   let text
   if (stage === 'reply') {
@@ -51,9 +53,10 @@ export default async function handler(req, res) {
     if (!msg) {
       return res.status(400).json({ ok: false, error: 'Empty message' })
     }
-    text = `💌 Saima ne REPLY bheja hai:\n\n"${msg}"\n\n🕒 ${when} (IST)`
+    text = `💌 REPLY aaya:\n"${msg}"\n\n${header}\n🕒 ${when}`
   } else {
-    text = (messages[stage] || `ℹ️ Event: ${stage}`) + `\n🕒 ${when} (IST)`
+    const action = actions[stage] || `ℹ️ ${stage}`
+    text = `${header}\n\n${action}\n🕒 ${when}`
   }
 
   try {
