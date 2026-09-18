@@ -8,7 +8,7 @@ function BeatingHeart() {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1, type: 'spring', stiffness: 180 }}
-      className="relative mt-8 flex items-center justify-center"
+      className="relative mt-6 flex items-center justify-center"
     >
       {/* Soft glow behind the heart */}
       <span className="absolute h-28 w-28 rounded-full bg-romance-pink/40 blur-2xl" />
@@ -63,34 +63,47 @@ export default function WelcomeScreen({ onNext }) {
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative w-full max-w-md rounded-[2rem] border border-white/15 bg-white/5 px-8 py-12 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
+        className="relative w-full max-w-md rounded-[2rem] border border-white/15 bg-white/5 px-8 py-11 text-center backdrop-blur-xl shadow-[0_25px_70px_rgba(0,0,0,0.45)]"
       >
-        {/* thin gradient top accent */}
-        <div className="mx-auto mb-6 h-1 w-16 rounded-full bg-gradient-to-r from-romance-pink to-romance-purple" />
+        {/* soft gradient glow ring */}
+        <div className="pointer-events-none absolute -inset-px rounded-[2rem] bg-gradient-to-br from-romance-pink/20 via-transparent to-romance-purple/20" />
 
+        {/* small badge */}
+        <motion.span
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="relative inline-block rounded-full border border-white/15 bg-white/10 px-4 py-1 font-body text-[0.65rem] tracking-[0.3em] text-romance-rose"
+        >
+          {config.welcome.badge}
+        </motion.span>
+
+        {/* script greeting */}
         <motion.p
           initial={{ y: 15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="font-script text-3xl sm:text-4xl text-romance-rose"
+          transition={{ delay: 0.45, duration: 0.6 }}
+          className="relative mt-5 font-script text-4xl sm:text-5xl text-romance-rose"
         >
           {config.welcome.small}
         </motion.p>
 
+        {/* main heading */}
         <motion.h1
-          initial={{ scale: 0.85, opacity: 0 }}
+          initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8, type: 'spring' }}
-          className="mt-3 font-display text-3xl sm:text-4xl font-bold leading-tight animate-glowPulse"
+          transition={{ delay: 0.65, duration: 0.8, type: 'spring' }}
+          className="relative mt-3 font-display text-[1.7rem] sm:text-[2rem] font-bold leading-[1.25] tracking-tight animate-glowPulse"
         >
           {config.welcome.big}
         </motion.h1>
 
+        {/* sub line */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          className="mt-4 font-body text-sm sm:text-base text-white/70"
+          transition={{ delay: 0.95, duration: 0.6 }}
+          className="relative mx-auto mt-4 max-w-xs font-body text-sm leading-relaxed text-white/70"
         >
           {config.welcome.sub}
         </motion.p>
@@ -102,10 +115,10 @@ export default function WelcomeScreen({ onNext }) {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.6 }}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           onClick={onNext}
-          className="glow-btn mt-10 w-full rounded-full bg-gradient-to-r from-romance-pink to-romance-purple px-10 py-4 font-body text-lg font-semibold text-white"
+          className="glow-btn relative mt-10 w-full rounded-full bg-gradient-to-r from-romance-pink to-romance-purple px-10 py-4 font-body text-lg font-semibold text-white"
         >
           {config.welcome.button}
         </motion.button>

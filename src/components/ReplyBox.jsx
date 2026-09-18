@@ -27,7 +27,7 @@ export default function ReplyBox() {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1, duration: 0.6 }}
-      className="mt-6 w-full max-w-md text-left"
+      className="mt-6 w-full text-left"
     >
       <label className="mb-2 block font-script text-2xl text-romance-rose text-center">
         Kuch kehna hai Mujhse ?

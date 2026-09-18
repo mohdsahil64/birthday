@@ -1,38 +1,58 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { config, assets } from './data'
 import { track } from './lib/track'
+import GiftScreen from './components/GiftScreen'
 import WelcomeScreen from './components/WelcomeScreen'
 import CelebrationScreen from './components/CelebrationScreen'
 import FinalWish from './components/FinalWish'
 
-// Screen order:
-// 0 = welcome
-// 1 = celebration (blast + confetti)
-// 2 = final wish (countdown + cake)
 export default function App() {
   const [screen, setScreen] = useState(0)
   const audioRef = useRef(null)
 
   const next = () => setScreen((s) => s + 1)
 
-  // Called by the "Open Your Surprise" button on the welcome screen.
-  // NOTE: notification sirf yahan (button click) pe jaata hai — page
-  // load / reload pe kabhi nahi.
-  const startFromWelcome = () => {
-    track('opened')
+  const startMusic = () => {
     const audio = audioRef.current
-    if (audio) {
-      audio.volume = 0.45
-      audio.loop = true
-      audio.play().catch(() => {})
+    if (!audio) return
+    audio.muted = false // kabhi mute na rahe
+    audio.volume = 1 // FULL volume, kam nahi
+    audio.loop = true
+    const p = audio.play()
+    if (p && p.catch) p.catch(() => {})
+  }
+
+  // Safety net: agar autoplay/first-play block ho jaye, to website me
+  // kisi bhi tap/click/scroll pe music FULL volume se chala do.
+  useEffect(() => {
+    const ensurePlaying = () => {
+      const audio = audioRef.current
+      if (!audio) return
+      audio.muted = false
+      audio.volume = 1
+      if (audio.paused) {
+        const p = audio.play()
+        if (p && p.catch) p.catch(() => {})
+      }
     }
+    const events = ['pointerdown', 'touchstart', 'click', 'keydown']
+    events.forEach((e) => document.addEventListener(e, ensurePlaying))
+    return () =>
+      events.forEach((e) => document.removeEventListener(e, ensurePlaying))
+  }, [])
+
+  // Gift box khulne pe — music start (first user gesture) + notify + next
+  const openGift = () => {
+    track('opened')
+    startMusic()
     next()
   }
 
   const renderScreen = () => {
-    if (screen === 0) return <WelcomeScreen onNext={startFromWelcome} />
-    if (screen === 1) return <CelebrationScreen onNext={next} />
+    if (screen === 0) return <GiftScreen onOpened={openGift} />
+    if (screen === 1) return <WelcomeScreen onNext={next} />
+    if (screen === 2) return <CelebrationScreen onNext={next} />
     return <FinalWish />
   }
 

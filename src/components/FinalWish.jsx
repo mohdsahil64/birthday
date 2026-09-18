@@ -107,12 +107,24 @@ export default function FinalWish() {
               {config.name} ❤️
             </motion.h2>
 
-            {/* Photo slideshow — full width, auto slide */}
+            {/* Blessing paragraph — heading ke neeche, photos se pehle */}
+            {finalWish.blessing && (
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.7 }}
+                className="mx-auto mt-5 w-full max-w-md px-3 font-body text-base sm:text-lg italic leading-relaxed text-white/80"
+              >
+                {finalWish.blessing}
+              </motion.p>
+            )}
+
+            {/* Photo slideshow — full width, auto slide (gap upar-neeche) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="my-6 w-full"
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="my-10 w-full"
             >
               <Slideshow />
             </motion.div>
@@ -122,13 +134,15 @@ export default function FinalWish() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.7 }}
-              className="max-w-xl font-body text-base sm:text-lg leading-relaxed text-white/90"
+              className="mx-auto w-full max-w-md px-2 font-body text-base sm:text-lg leading-relaxed text-white/90"
             >
               {cakeWish}
             </motion.p>
 
             {/* Reply box — Saima can write back, delivered to Telegram */}
-            <ReplyBox />
+            <div className="w-full max-w-md px-2">
+              <ReplyBox />
+            </div>
 
             {/* Divider */}
             <motion.div
@@ -140,7 +154,7 @@ export default function FinalWish() {
 
             {/* Shayari (typing) — readable font, italic */}
             <p
-              className={`max-w-xl font-body text-lg sm:text-xl italic leading-relaxed text-white ${
+              className={`mx-auto w-full max-w-md px-2 font-body text-lg sm:text-xl italic leading-relaxed text-white ${
                 done ? '' : 'caret'
               }`}
             >
