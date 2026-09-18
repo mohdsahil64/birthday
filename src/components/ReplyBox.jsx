@@ -30,7 +30,7 @@ export default function ReplyBox() {
       className="mt-6 w-full text-left"
     >
       <label className="mb-2 block font-script text-2xl text-romance-rose text-center">
-        Kuch kehna hai Mujhse ?
+        Kuch kehna hai ?
       </label>
 
       {status === 'sent' ? (
@@ -46,7 +46,7 @@ export default function ReplyBox() {
             onClick={() => setStatus('idle')}
             className="mt-2 block w-full text-xs text-white/50 underline underline-offset-4"
           >
-            Ek aur message bhejna hai?
+            Send Again ?
           </button>
         </motion.p>
       ) : (
